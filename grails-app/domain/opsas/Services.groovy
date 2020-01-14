@@ -3,7 +3,8 @@ package opsas
 class Services {
     String name;
     String paymentCode;
-    static hasMany = [type:ServiceType]
+    String description;
+    static hasMany = [type: ServiceType]
     static belongsTo = [administrativeStructure: AdministrativeStructures]
 
     static constraints = {

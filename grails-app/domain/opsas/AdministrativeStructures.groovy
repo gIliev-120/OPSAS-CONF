@@ -4,9 +4,9 @@ class AdministrativeStructures {
     String name;
     String code;
 
-    static hasMany = [services:Services]
+    static hasMany = [services: Services]
     //static hasOne = [bankDetail:BankDetails]
-    static belongsTo = [municipality:Municipalities]
+    static belongsTo = [municipality: Municipalities]
 
     static constraints = {
     }

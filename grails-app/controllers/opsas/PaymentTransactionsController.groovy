@@ -4,70 +4,70 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 @Secured(['ROLE_ADMIN','ROLE_USER'])
-class PaymentTransactionsController {
+class PaymentTransactionController {
 
-    PaymentTransactionsService paymentTransactionsService
+    PaymentTransactionService paymentTransactionService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond paymentTransactionsService.list(params), model:[paymentTransactionsCount: paymentTransactionsService.count()]
+        respond paymentTransactionService.list(params), model:[paymentTransactionCount: paymentTransactionService.count()]
     }
 
     def show(Long id) {
-        respond paymentTransactionsService.get(id)
+        respond paymentTransactionService.get(id)
     }
 
     def create() {
-        respond new PaymentTransactions(params)
+        respond new PaymentTransaction(params)
     }
 
-    def save(PaymentTransactions paymentTransactions) {
-        if (paymentTransactions == null) {
+    def save(PaymentTransaction paymentTransaction) {
+        if (paymentTransaction == null) {
             notFound()
             return
         }
 
         try {
-            paymentTransactionsService.save(paymentTransactions)
+            paymentTransactionService.save(paymentTransaction)
         } catch (ValidationException e) {
-            respond paymentTransactions.errors, view:'create'
+            respond paymentTransaction.errors, view:'create'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'paymentTransactions.label', default: 'PaymentTransactions'), paymentTransactions.id])
-                redirect paymentTransactions
+                flash.message = message(code: 'default.created.message', args: [message(code: 'paymentTransaction.label', default: 'PaymentTransaction'), paymentTransaction.id])
+                redirect paymentTransaction
             }
-            '*' { respond paymentTransactions, [status: CREATED] }
+            '*' { respond paymentTransaction, [status: CREATED] }
         }
     }
 
     def edit(Long id) {
-        respond paymentTransactionsService.get(id)
+        respond paymentTransactionService.get(id)
     }
 
-    def update(PaymentTransactions paymentTransactions) {
-        if (paymentTransactions == null) {
+    def update(PaymentTransaction paymentTransaction) {
+        if (paymentTransaction == null) {
             notFound()
             return
         }
 
         try {
-            paymentTransactionsService.save(paymentTransactions)
+            paymentTransactionService.save(paymentTransaction)
         } catch (ValidationException e) {
-            respond paymentTransactions.errors, view:'edit'
+            respond paymentTransaction.errors, view:'edit'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'paymentTransactions.label', default: 'PaymentTransactions'), paymentTransactions.id])
-                redirect paymentTransactions
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'paymentTransaction.label', default: 'PaymentTransaction'), paymentTransaction.id])
+                redirect paymentTransaction
             }
-            '*'{ respond paymentTransactions, [status: OK] }
+            '*'{ respond paymentTransaction, [status: OK] }
         }
     }
 
@@ -77,11 +77,11 @@ class PaymentTransactionsController {
             return
         }
 
-        paymentTransactionsService.delete(id)
+        paymentTransactionService.delete(id)
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'paymentTransactions.label', default: 'PaymentTransactions'), id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'paymentTransaction.label', default: 'PaymentTransaction'), id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -91,7 +91,7 @@ class PaymentTransactionsController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'paymentTransactions.label', default: 'PaymentTransactions'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'paymentTransaction.label', default: 'PaymentTransaction'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

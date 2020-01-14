@@ -1,4 +1,5 @@
 package enums;
+
 enum Type {
     EXPRESS("E"),
     STANDARD("S"),

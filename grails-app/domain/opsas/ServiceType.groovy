@@ -1,11 +1,10 @@
 package opsas
 
-import enums.Type
 import enums.DurationKind
-
+import enums.Type
 
 class ServiceType {
-    Type type;
+    Type name;
     String duration;
     DurationKind durationKind;
     BigDecimal price
